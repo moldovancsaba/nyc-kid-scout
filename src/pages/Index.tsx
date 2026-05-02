@@ -36,15 +36,14 @@ const Index = () => {
             </button>
             <button
               onClick={() => setView("Classes")}
-              className="lg:hidden rounded-full transition-opacity hover:opacity-80"
+              className="flex items-center gap-3 rounded-full transition-opacity hover:opacity-80"
               aria-label="Go to home"
             >
-              <Logo withWordmark={false} size={96} />
+              <Logo withWordmark={false} size={48} />
+              <span className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
+                Class Scout NYC
+              </span>
             </button>
-            <div className="hidden lg:block">
-              <p className="text-xs text-muted-foreground">Welcome back</p>
-              <p className="font-display text-sm font-semibold text-foreground">Hi, Jessica 👋</p>
-            </div>
           </div>
 
           <div className="flex items-center gap-2">
