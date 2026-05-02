@@ -35,7 +35,7 @@ const Index = () => {
               <Menu className="h-5 w-5" />
             </button>
             <div className="lg:hidden">
-              <Logo withWordmark={false} size={48} />
+              <Logo withWordmark={false} size={96} />
             </div>
             <div className="hidden lg:block">
               <p className="text-xs text-muted-foreground">Welcome back</p>
