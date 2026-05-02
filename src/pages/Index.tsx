@@ -34,9 +34,13 @@ const Index = () => {
             >
               <Menu className="h-5 w-5" />
             </button>
-            <div className="lg:hidden">
+            <button
+              onClick={() => setView("Classes")}
+              className="lg:hidden rounded-full transition-opacity hover:opacity-80"
+              aria-label="Go to home"
+            >
               <Logo withWordmark={false} size={96} />
-            </div>
+            </button>
             <div className="hidden lg:block">
               <p className="text-xs text-muted-foreground">Welcome back</p>
               <p className="font-display text-sm font-semibold text-foreground">Hi, Jessica 👋</p>

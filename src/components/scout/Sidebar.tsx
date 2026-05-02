@@ -40,7 +40,13 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
         )}
       >
         <div className="flex items-center justify-between p-6">
-          <Logo />
+          <button
+            onClick={() => handle("Classes")}
+            className="rounded-lg transition-opacity hover:opacity-80"
+            aria-label="Go to home"
+          >
+            <Logo />
+          </button>
           <button
             className="rounded-md p-2 text-sidebar-foreground/70 hover:bg-sidebar-accent lg:hidden"
             onClick={onCloseMobile}
