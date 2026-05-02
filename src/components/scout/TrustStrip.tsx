@@ -1,7 +1,7 @@
 import { MapPin, ShieldCheck, Heart, Calculator } from "lucide-react";
 
 const ITEMS = [
-  { icon: MapPin, title: "Local Experts", text: "NYC-focused listings by borough and neighborhood." },
+  { icon: MapPin, title: "Local Listings", text: "NYC-focused listings by borough and neighborhood." },
   { icon: ShieldCheck, title: "Vetted Providers", text: "Helpful provider details in one easy place." },
   { icon: Heart, title: "Parent Approved", text: "Built for busy families comparing options." },
   { icon: Calculator, title: "Save & Compare", text: "Save favorites and estimate your total activity cost." },
