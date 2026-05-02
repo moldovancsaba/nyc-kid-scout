@@ -40,7 +40,7 @@ export function DiscoverView({ category, onOpen, onShare }: Props) {
       <section className="relative overflow-hidden rounded-3xl bg-card shadow-card">
         <div className="grid items-center gap-6 p-8 sm:p-10 md:grid-cols-[1.2fr_1fr]">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Premium local guide</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Your local class scout</p>
             <h1 className="mt-2 font-display text-3xl font-bold leading-[1.1] text-foreground sm:text-4xl md:text-5xl">
               Discover the best<br />kids activities in NYC
             </h1>
