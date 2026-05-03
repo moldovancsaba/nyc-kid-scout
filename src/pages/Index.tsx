@@ -3,6 +3,7 @@ import { Sidebar, type ViewKey } from "@/components/scout/Sidebar";
 import { DiscoverView } from "@/components/scout/views/DiscoverView";
 import { SavedView } from "@/components/scout/views/SavedView";
 import { CalculatorView } from "@/components/scout/views/CalculatorView";
+import { ScoutAssistantView } from "@/components/scout/views/ScoutAssistantView";
 import { ProviderProfile } from "@/components/scout/panels/ProviderProfile";
 import { ShareDialog } from "@/components/scout/panels/ShareDialog";
 import { TrustStrip } from "@/components/scout/TrustStrip";
@@ -86,6 +87,7 @@ const Index = () => {
             )}
             {view === "Saved" && <SavedView onOpen={setOpenProvider} onShare={setShareProvider} />}
             {view === "Calculator" && <CalculatorView />}
+            {view === "Scout Assistant" && <ScoutAssistantView />}
             <TrustStrip />
             <footer className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
               Class Scout NY · Trusted. Local. For NYC families. · Demo prices for planning purposes only.
