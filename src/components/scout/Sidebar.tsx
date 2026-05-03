@@ -1,16 +1,17 @@
-import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, X } from "lucide-react";
+import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/provider";
 
-export type ViewKey = Category | "Saved" | "Calculator";
+export type ViewKey = Category | "Saved" | "Calculator" | "Scout Assistant";
 
 const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: "Classes", icon: GraduationCap },
   { key: "Camps", icon: Tent },
   { key: "Birthday Parties", icon: PartyPopper },
   { key: "Drop-In Activities", icon: Sparkles },
+  { key: "Scout Assistant", icon: Bot },
   { key: "Saved", icon: Heart },
   { key: "Calculator", icon: Calculator },
 ];
@@ -59,7 +60,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
         <nav className="flex-1 px-4 py-2" aria-label="Main">
           <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">Discover</p>
           <ul className="space-y-1">
-            {ITEMS.slice(0, 4).map(({ key, icon: Icon }) => (
+            {ITEMS.slice(0, 5).map(({ key, icon: Icon }) => (
               <li key={key}>
                 <button
                   onClick={() => handle(key)}
@@ -80,7 +81,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
 
           <p className="px-3 pb-2 pt-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">My tools</p>
           <ul className="space-y-1">
-            {ITEMS.slice(4).map(({ key, icon: Icon }) => (
+            {ITEMS.slice(5).map(({ key, icon: Icon }) => (
               <li key={key}>
                 <button
                   onClick={() => handle(key)}
