@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { PROVIDERS } from "@/data/providers";
 import { ProviderCard } from "../ProviderCard";
+import { ProviderMap } from "./ProviderMap";
 
 export function ProviderProfile({
   provider,
@@ -127,6 +128,8 @@ export function ProviderProfile({
               </a>
             </div>
           </div>
+
+          <ProviderMap address={provider.address} borough={provider.borough} />
 
           {similar.length > 0 && (
             <div>
