@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/provider";
 
-export type ViewKey = Category | "Saved" | "Calculator" | "Scout Assistant";
+export type ViewKey = Category | "Saved" | "Calculator" | "Scout AI Assistant";
 
 const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: "Classes", icon: GraduationCap },
   { key: "Camps", icon: Tent },
   { key: "Birthday Parties", icon: PartyPopper },
   { key: "Drop-In Activities", icon: Sparkles },
-  { key: "Scout Assistant", icon: Bot },
+  { key: "Scout AI Assistant", icon: Bot },
   { key: "Saved", icon: Heart },
   { key: "Calculator", icon: Calculator },
 ];

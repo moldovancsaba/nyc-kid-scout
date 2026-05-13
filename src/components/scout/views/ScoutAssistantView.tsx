@@ -119,7 +119,7 @@ export function ScoutAssistantView() {
             <Sparkles className="h-4 w-4" />
           </span>
           <div>
-            <h1 className="font-display text-2xl font-bold">Scout Assistant</h1>
+            <h1 className="font-display text-2xl font-bold">Scout AI Assistant</h1>
             <p className="text-sm text-muted-foreground">
               Your AI guide to NYC kids' classes, camps, parties, and drop-ins.
             </p>
@@ -197,7 +197,7 @@ export function ScoutAssistantView() {
               send(input);
             }
           }}
-          placeholder="Ask Scout Assistant…"
+          placeholder="Ask Scout AI Assistant…"
           rows={1}
           className="min-h-[48px] resize-none rounded-xl bg-card"
         />
