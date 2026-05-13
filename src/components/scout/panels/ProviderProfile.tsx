@@ -1,7 +1,8 @@
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import type { Provider } from "@/types/provider";
-import { Heart, Plus, Mail, Globe, Phone, MapPin, Star, Share2, MessageCircle } from "lucide-react";
+import { Heart, Plus, Mail, Globe, Phone, MapPin, Star, MessageCircle, Megaphone, X, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import { useSaved, useCalculator } from "@/store/useScout";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -22,8 +23,14 @@ export function ProviderProfile({
 }) {
   const { isSaved, toggle } = useSaved();
   const { add } = useCalculator();
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const [bannerOpen, setBannerOpen] = useState(true);
   if (!provider) return null;
   const saved = isSaved(provider.id);
+  const gallery = provider.galleryImages && provider.galleryImages.length > 0
+    ? provider.galleryImages
+    : [provider.image];
+  const current = gallery[Math.min(photoIdx, gallery.length - 1)];
 
   const similar = PROVIDERS.filter(
     (p) => p.id !== provider.id && p.borough === provider.borough && p.category === provider.category,
@@ -42,15 +49,88 @@ export function ProviderProfile({
     <Sheet open={!!provider} onOpenChange={(o) => !o && onClose()}>
       <SheetContent side="right" className="w-full overflow-y-auto p-0 sm:max-w-xl bg-background">
         <div className="relative h-64 w-full overflow-hidden">
-          <img src={provider.image} alt={provider.name} className="h-full w-full object-cover" />
+          <img src={current} alt={provider.name} className="h-full w-full object-cover" />
           {provider.badges[0] && (
             <span className="absolute left-5 top-5 rounded-full bg-teal px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-teal-foreground">
               {provider.badges[0]}
             </span>
           )}
+          {gallery.length > 1 && (
+            <>
+              <button
+                onClick={() => setPhotoIdx((i) => (i - 1 + gallery.length) % gallery.length)}
+                aria-label="Previous photo"
+                className="absolute left-3 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-card/95 shadow-sm backdrop-blur hover:bg-card"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setPhotoIdx((i) => (i + 1) % gallery.length)}
+                aria-label="Next photo"
+                className="absolute right-3 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-card/95 shadow-sm backdrop-blur hover:bg-card"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+              <span className="absolute right-3 top-3 rounded-full bg-foreground/70 px-2.5 py-1 text-[11px] font-semibold text-background">
+                {photoIdx + 1} / {gallery.length}
+              </span>
+              <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+                {gallery.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setPhotoIdx(i)}
+                    aria-label={`Go to photo ${i + 1}`}
+                    className={cn(
+                      "h-2 rounded-full transition-all",
+                      i === photoIdx ? "w-6 bg-teal" : "w-2 bg-card/80",
+                    )}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <div className="space-y-6 p-6 pb-12">
+          {provider.announcementTitle && bannerOpen && (
+            <div className="flex items-start gap-3 rounded-2xl border border-teal/30 bg-teal-soft p-4">
+              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-teal/15 text-teal">
+                <Megaphone className="h-4 w-4" />
+              </div>
+              <div className="flex-1">
+                <p className="font-display text-sm font-semibold text-foreground">{provider.announcementTitle}</p>
+                {provider.announcementDescription && (
+                  <p className="mt-0.5 text-xs text-muted-foreground">{provider.announcementDescription}</p>
+                )}
+              </div>
+              <button
+                onClick={() => setBannerOpen(false)}
+                aria-label="Dismiss announcement"
+                className="rounded-full p-1 text-muted-foreground hover:bg-card"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+
+          {gallery.length > 1 && (
+            <div className="flex gap-2 overflow-x-auto">
+              {gallery.map((src, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPhotoIdx(i)}
+                  aria-label={`View photo ${i + 1}`}
+                  className={cn(
+                    "relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border-2 transition-all",
+                    i === photoIdx ? "border-teal" : "border-transparent opacity-70 hover:opacity-100",
+                  )}
+                >
+                  <img src={src} alt={`${provider.name} photo ${i + 1}`} className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal">{provider.category}</p>
             <h2 className="mt-1 font-display text-2xl font-bold text-foreground">{provider.name}</h2>
@@ -87,6 +167,15 @@ export function ProviderProfile({
           <p className="text-sm leading-relaxed text-foreground/85">{provider.longDescription}</p>
 
           <div className="grid grid-cols-2 gap-2">
+            {provider.bookingEnabled && (
+              <Button
+                className="col-span-2 bg-teal text-teal-foreground hover:bg-teal/90"
+                aria-label={`Book now with ${provider.name}`}
+                onClick={() => toast.success("Booking link coming soon. Visit the provider website or contact them directly.")}
+              >
+                <Calendar className="h-4 w-4" /> Book Now
+              </Button>
+            )}
             <Button
               className="bg-foreground text-background hover:bg-foreground/90"
               onClick={() => {
