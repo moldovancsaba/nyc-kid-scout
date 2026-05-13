@@ -87,7 +87,7 @@ const Index = () => {
             )}
             {view === "Saved" && <SavedView onOpen={setOpenProvider} onShare={setShareProvider} />}
             {view === "Calculator" && <CalculatorView />}
-            {view === "Scout Assistant" && <ScoutAssistantView />}
+            {view === "Scout AI Assistant" && <ScoutAssistantView />}
             <TrustStrip />
             <footer className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
               Class Scout NY · Trusted. Local. For NYC families. · Demo prices for planning purposes only.
