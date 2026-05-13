@@ -30,4 +30,10 @@ export interface Provider {
   email: string;
   website: string;
   phone: string;
+  // Optional enhancements (currently used for Staten Island providers)
+  announcementTitle?: string;
+  announcementDescription?: string;
+  announcementBadge?: string;
+  galleryImages?: string[];
+  bookingEnabled?: boolean;
 }
