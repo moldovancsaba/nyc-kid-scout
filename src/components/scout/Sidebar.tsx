@@ -1,10 +1,10 @@
-import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, Users, X, Home } from "lucide-react";
+import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, Users, X, Home, UserCircle } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/provider";
 
-export type ViewKey = Category | "Saved" | "Calculator" | "Scout AI Assistant" | "Meet-Up Groups" | "Home";
+export type ViewKey = Category | "Saved" | "Calculator" | "Scout AI Assistant" | "Meet-Up Groups" | "Home" | "My Account";
 
 const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: "Home", icon: Home },
@@ -16,6 +16,7 @@ const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }
   { key: "Scout AI Assistant", icon: Bot },
   { key: "Saved", icon: Heart },
   { key: "Calculator", icon: Calculator },
+  { key: "My Account", icon: UserCircle },
 ];
 
 interface Props {

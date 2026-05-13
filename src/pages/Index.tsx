@@ -6,6 +6,7 @@ import { CalculatorView } from "@/components/scout/views/CalculatorView";
 import { ScoutAssistantView } from "@/components/scout/views/ScoutAssistantView";
 import { MeetupGroupsView } from "@/components/scout/views/MeetupGroupsView";
 import { HomeView } from "@/components/scout/views/HomeView";
+import { MyAccountView } from "@/components/scout/views/MyAccountView";
 import { ProviderProfile } from "@/components/scout/panels/ProviderProfile";
 import { ShareDialog } from "@/components/scout/panels/ShareDialog";
 import { MeetupGroupProfile } from "@/components/scout/panels/MeetupGroupProfile";
@@ -14,7 +15,7 @@ import { TrustStrip } from "@/components/scout/TrustStrip";
 import { Logo } from "@/components/scout/Logo";
 import type { Provider, Borough, Category } from "@/types/provider";
 import type { MeetupGroup } from "@/types/meetup";
-import { Menu, Heart, Bell } from "lucide-react";
+import { Menu, Heart, Bell, UserCircle } from "lucide-react";
 import { useSaved, useCalculator } from "@/store/useScout";
 
 const Index = () => {
@@ -29,7 +30,7 @@ const Index = () => {
   const { items } = useCalculator();
 
   const handleNavigate = (
-    next: Category | "Saved" | "Calculator" | "Meet-Up Groups",
+    next: Category | "Saved" | "Calculator" | "Meet-Up Groups" | "My Account",
     location?: { borough?: Borough; neighborhood?: string },
   ) => {
     if (location) setPendingLocation(location);
@@ -105,6 +106,15 @@ const Index = () => {
                 </span>
               )}
             </button>
+            <button
+              onClick={() => setView("My Account")}
+              className={`grid h-10 w-10 place-items-center rounded-full text-foreground shadow-sm hover:bg-secondary ${
+                view === "My Account" ? "bg-teal text-teal-foreground" : "bg-card"
+              }`}
+              aria-label="My Account"
+            >
+              <UserCircle className="h-5 w-5" />
+            </button>
           </div>
         </header>
 
@@ -128,6 +138,15 @@ const Index = () => {
             {view === "Scout AI Assistant" && <ScoutAssistantView />}
             {view === "Meet-Up Groups" && (
               <MeetupGroupsView onOpen={setOpenGroup} onShare={setShareGroup} />
+            )}
+            {view === "My Account" && (
+              <MyAccountView
+                onNavigate={handleNavigate}
+                onOpenProvider={setOpenProvider}
+                onShareProvider={setShareProvider}
+                onOpenGroup={setOpenGroup}
+                onShareGroup={setShareGroup}
+              />
             )}
             {view !== "Home" && <TrustStrip />}
             <footer className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
