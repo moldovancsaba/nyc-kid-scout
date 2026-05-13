@@ -72,12 +72,6 @@ const Index = () => {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setView("Meet-Up Groups")}
-              className="hidden rounded-full px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary md:inline-block"
-            >
-              Meet-Up Groups
-            </button>
-            <button
               onClick={() => setView("Saved")}
               className="relative grid h-10 w-10 place-items-center rounded-full bg-card text-foreground shadow-sm hover:bg-secondary"
               aria-label="Saved"
