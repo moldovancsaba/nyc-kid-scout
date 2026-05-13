@@ -64,6 +64,31 @@ function jitterRating(seed: number): number {
 export const PROVIDERS: Provider[] = (() => {
   const out: Provider[] = [];
   let i = 0;
+  const SI_ANNOUNCEMENTS = [
+    { title: "20% off summer enrollment", description: "Use code SUMMER20. Offer ends June 30.", badge: "20% off summer" },
+    { title: "Fall enrollment opens June 9", description: "Reserve your child's spot before classes fill.", badge: "Fall enrollment open" },
+    { title: "Early bird pricing ends May 31", description: "Save on upcoming camp and class sessions.", badge: "Early bird pricing" },
+    { title: "Birthday party dates now open", description: "Weekend party slots available for ages 3–8.", badge: "Birthday dates open" },
+    { title: "New toddler class added", description: "Morning sessions now available for ages 0–3.", badge: "New toddler class" },
+  ];
+  // Pick 3 themed gallery images from existing assets based on activity.
+  const galleryFor = (cat: Category, types: string[], main: string): string[] => {
+    const t = types.join(" ").toLowerCase() + " " + cat.toLowerCase();
+    const has = (k: string) => t.includes(k);
+    let extras: string[];
+    if (has("dance") || has("ballet")) extras = [imgDance, imgMusic, imgGym];
+    else if (has("soccer") || has("basketball") || has("sport")) extras = [imgSoccer, imgGym, imgCamp];
+    else if (has("art") || has("paint") || has("ceram")) extras = [imgArt, imgCamp, imgPlay];
+    else if (has("yoga") || has("mindful")) extras = [imgYoga, imgPlay, imgGym];
+    else if (has("stem") || has("science")) extras = [imgStem, imgArt, imgCamp];
+    else if (has("gymnastic")) extras = [imgGym, imgPlay, imgCamp];
+    else if (has("music") || has("theater")) extras = [imgMusic, imgArt, imgPlay];
+    else if (has("birthday")) extras = [imgParty, imgPlay, imgCamp];
+    else if (has("camp")) extras = [imgCamp, imgSoccer, imgArt];
+    else if (has("play") || has("sensory")) extras = [imgPlay, imgGym, imgArt];
+    else extras = [imgCamp, imgArt, imgPlay];
+    return [main, ...extras.filter((x) => x !== main).slice(0, 3)];
+  };
   (Object.keys(NEIGHBORHOODS) as Borough[]).forEach((borough, bIdx) => {
     NEIGHBORHOODS[borough].forEach((neighborhood, nIdx) => {
       // 3-5 providers per neighborhood
@@ -72,6 +97,8 @@ export const PROVIDERS: Provider[] = (() => {
         const t = TEMPLATES[(bIdx * 7 + nIdx * 3 + k) % TEMPLATES.length];
         i++;
         const id = `${borough}-${neighborhood}-${k}`.replace(/\s+/g, "-").toLowerCase();
+        const isSI = borough === "Staten Island";
+        const ann = isSI ? SI_ANNOUNCEMENTS[i % SI_ANNOUNCEMENTS.length] : undefined;
         out.push({
           id,
           name: t.name,
@@ -92,6 +119,11 @@ export const PROVIDERS: Provider[] = (() => {
           email: `hello@${t.name.toLowerCase().replace(/[^a-z]/g, "")}.com`,
           website: `https://${t.name.toLowerCase().replace(/[^a-z]/g, "")}.com`,
           phone: "(212) 555-0100",
+          announcementTitle: ann?.title,
+          announcementDescription: ann?.description,
+          announcementBadge: ann?.badge,
+          galleryImages: isSI ? galleryFor(t.category, t.activityTypes, t.image) : undefined,
+          bookingEnabled: isSI ? true : undefined,
         });
       }
     });
