@@ -45,7 +45,7 @@ export function DiscoverView({ category, onOpen, onShare }: Props) {
               Discover the best<br />kids activities in NYC
             </h1>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Find {category.toLowerCase()}, camps, birthday parties, and drop-in activities by borough and neighborhood. Curated. Local. Trusted by parents.
+              Find {category.toLowerCase()}, camps, birthday parties, and drop-in activities by borough and neighborhood. Curated. Local. Built by parents.
             </p>
           </div>
           <img
