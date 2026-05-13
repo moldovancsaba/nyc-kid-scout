@@ -5,26 +5,42 @@ import { SavedView } from "@/components/scout/views/SavedView";
 import { CalculatorView } from "@/components/scout/views/CalculatorView";
 import { ScoutAssistantView } from "@/components/scout/views/ScoutAssistantView";
 import { MeetupGroupsView } from "@/components/scout/views/MeetupGroupsView";
+import { HomeView } from "@/components/scout/views/HomeView";
 import { ProviderProfile } from "@/components/scout/panels/ProviderProfile";
 import { ShareDialog } from "@/components/scout/panels/ShareDialog";
 import { MeetupGroupProfile } from "@/components/scout/panels/MeetupGroupProfile";
 import { MeetupShareDialog } from "@/components/scout/panels/MeetupShareDialog";
 import { TrustStrip } from "@/components/scout/TrustStrip";
 import { Logo } from "@/components/scout/Logo";
-import type { Provider } from "@/types/provider";
+import type { Provider, Borough, Category } from "@/types/provider";
 import type { MeetupGroup } from "@/types/meetup";
 import { Menu, Heart, Bell } from "lucide-react";
 import { useSaved, useCalculator } from "@/store/useScout";
 
 const Index = () => {
-  const [view, setView] = useState<ViewKey>("Classes");
+  const [view, setView] = useState<ViewKey>("Home");
   const [openProvider, setOpenProvider] = useState<Provider | null>(null);
   const [shareProvider, setShareProvider] = useState<Provider | null>(null);
   const [openGroup, setOpenGroup] = useState<MeetupGroup | null>(null);
   const [shareGroup, setShareGroup] = useState<MeetupGroup | null>(null);
   const [mobileNav, setMobileNav] = useState(false);
+  const [pendingLocation, setPendingLocation] = useState<{ borough?: Borough; neighborhood?: string } | null>(null);
   const { saved } = useSaved();
   const { items } = useCalculator();
+
+  const handleNavigate = (
+    next: Category | "Saved" | "Calculator" | "Meet-Up Groups",
+    location?: { borough?: Borough; neighborhood?: string },
+  ) => {
+    if (location) setPendingLocation(location);
+    else setPendingLocation(null);
+    setView(next);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const discoverKey = pendingLocation
+    ? `${pendingLocation.borough ?? ""}-${pendingLocation.neighborhood ?? ""}`
+    : "default";
 
   return (
     <div className="flex min-h-screen w-full bg-ivory">
@@ -42,7 +58,7 @@ const Index = () => {
               <Menu className="h-5 w-5" />
             </button>
             <button
-              onClick={() => setView("Classes")}
+              onClick={() => setView("Home")}
               className="flex items-center gap-3 rounded-full transition-opacity hover:opacity-80"
               aria-label="Go to home"
             >
@@ -54,6 +70,12 @@ const Index = () => {
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setView("Meet-Up Groups")}
+              className="hidden rounded-full px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary md:inline-block"
+            >
+              Meet-Up Groups
+            </button>
             <button
               onClick={() => setView("Saved")}
               className="relative grid h-10 w-10 place-items-center rounded-full bg-card text-foreground shadow-sm hover:bg-secondary"
@@ -88,8 +110,18 @@ const Index = () => {
 
         <main className="flex-1 px-4 py-6 sm:px-8 sm:py-10">
           <div className="mx-auto max-w-[1400px] animate-fade-in">
+            {view === "Home" && (
+              <HomeView onNavigate={handleNavigate} onOpenProvider={setOpenProvider} onOpenGroup={setOpenGroup} />
+            )}
             {(view === "Classes" || view === "Camps" || view === "Birthday Parties" || view === "Drop-In Activities") && (
-              <DiscoverView category={view} onOpen={setOpenProvider} onShare={setShareProvider} />
+              <DiscoverView
+                key={`${view}-${discoverKey}`}
+                category={view}
+                onOpen={setOpenProvider}
+                onShare={setShareProvider}
+                initialBorough={pendingLocation?.borough ?? null}
+                initialNeighborhood={pendingLocation?.neighborhood ?? null}
+              />
             )}
             {view === "Saved" && <SavedView onOpen={setOpenProvider} onShare={setShareProvider} />}
             {view === "Calculator" && <CalculatorView />}
@@ -97,7 +129,7 @@ const Index = () => {
             {view === "Meet-Up Groups" && (
               <MeetupGroupsView onOpen={setOpenGroup} onShare={setShareGroup} />
             )}
-            <TrustStrip />
+            {view !== "Home" && <TrustStrip />}
             <footer className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
               Class Scout NY · Trusted. Local. For NYC families. · Demo prices for planning purposes only.
             </footer>
