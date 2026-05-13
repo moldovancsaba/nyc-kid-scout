@@ -4,11 +4,15 @@ import { DiscoverView } from "@/components/scout/views/DiscoverView";
 import { SavedView } from "@/components/scout/views/SavedView";
 import { CalculatorView } from "@/components/scout/views/CalculatorView";
 import { ScoutAssistantView } from "@/components/scout/views/ScoutAssistantView";
+import { MeetupGroupsView } from "@/components/scout/views/MeetupGroupsView";
 import { ProviderProfile } from "@/components/scout/panels/ProviderProfile";
 import { ShareDialog } from "@/components/scout/panels/ShareDialog";
+import { MeetupGroupProfile } from "@/components/scout/panels/MeetupGroupProfile";
+import { MeetupShareDialog } from "@/components/scout/panels/MeetupShareDialog";
 import { TrustStrip } from "@/components/scout/TrustStrip";
 import { Logo } from "@/components/scout/Logo";
 import type { Provider } from "@/types/provider";
+import type { MeetupGroup } from "@/types/meetup";
 import { Menu, Heart, Bell } from "lucide-react";
 import { useSaved, useCalculator } from "@/store/useScout";
 
@@ -16,6 +20,8 @@ const Index = () => {
   const [view, setView] = useState<ViewKey>("Classes");
   const [openProvider, setOpenProvider] = useState<Provider | null>(null);
   const [shareProvider, setShareProvider] = useState<Provider | null>(null);
+  const [openGroup, setOpenGroup] = useState<MeetupGroup | null>(null);
+  const [shareGroup, setShareGroup] = useState<MeetupGroup | null>(null);
   const [mobileNav, setMobileNav] = useState(false);
   const { saved } = useSaved();
   const { items } = useCalculator();
@@ -88,6 +94,9 @@ const Index = () => {
             {view === "Saved" && <SavedView onOpen={setOpenProvider} onShare={setShareProvider} />}
             {view === "Calculator" && <CalculatorView />}
             {view === "Scout AI Assistant" && <ScoutAssistantView />}
+            {view === "Meet-Up Groups" && (
+              <MeetupGroupsView onOpen={setOpenGroup} onShare={setShareGroup} />
+            )}
             <TrustStrip />
             <footer className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
               Class Scout NY · Trusted. Local. For NYC families. · Demo prices for planning purposes only.
@@ -103,6 +112,13 @@ const Index = () => {
         onOpenAnother={(p) => setOpenProvider(p)}
       />
       <ShareDialog provider={shareProvider} onClose={() => setShareProvider(null)} />
+      <MeetupGroupProfile
+        group={openGroup}
+        onClose={() => setOpenGroup(null)}
+        onShare={setShareGroup}
+        onOpenAnother={(g) => setOpenGroup(g)}
+      />
+      <MeetupShareDialog group={shareGroup} onClose={() => setShareGroup(null)} />
     </div>
   );
 };
