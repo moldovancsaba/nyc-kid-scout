@@ -11,7 +11,7 @@ type Msg = { role: "user" | "assistant"; content: string };
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/scout-assistant`;
 
 const STARTERS = [
-  "Birthday party venues in Queens",
+  "Help me plan my fall schedule for my 5-year-old",
   "Summer camps in the UES for a 7-year-old",
   "Fun birthday party ideas in Queens",
   "Drop-in art studios near the Upper West Side",
