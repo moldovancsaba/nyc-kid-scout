@@ -1,4 +1,4 @@
-import { Heart, Share2, Plus, Star, MapPin } from "lucide-react";
+import { Heart, Share2, Plus, Star, MapPin, Calendar, Megaphone } from "lucide-react";
 import type { Provider } from "@/types/provider";
 import { Button } from "@/components/ui/button";
 import { useSaved, useCalculator } from "@/store/useScout";
@@ -30,6 +30,12 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
         {provider.badges[0] && (
           <span className="absolute left-3 top-3 rounded-full bg-teal px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-teal-foreground shadow-sm">
             {provider.badges[0]}
+          </span>
+        )}
+        {provider.announcementBadge && (
+          <span className="absolute left-3 bottom-3 inline-flex items-center gap-1 rounded-full bg-orange px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
+            <Megaphone className="h-3 w-3" />
+            {provider.announcementBadge}
           </span>
         )}
         <button
@@ -86,9 +92,19 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
         </div>
 
         <div className="mt-4 flex gap-2">
-          <Button onClick={() => onOpen(provider)} className="flex-1 bg-foreground text-background hover:bg-foreground/90">
-            View details
-          </Button>
+          {provider.bookingEnabled ? (
+            <Button
+              onClick={() => onOpen(provider)}
+              aria-label={`Book now with ${provider.name}`}
+              className="flex-1 bg-teal text-teal-foreground hover:bg-teal/90"
+            >
+              <Calendar className="h-4 w-4" /> Book Now
+            </Button>
+          ) : (
+            <Button onClick={() => onOpen(provider)} className="flex-1 bg-foreground text-background hover:bg-foreground/90">
+              View details
+            </Button>
+          )}
           <Button
             variant="outline"
             size="icon"
