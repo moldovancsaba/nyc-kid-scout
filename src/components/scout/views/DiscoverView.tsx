@@ -14,11 +14,13 @@ interface Props {
   category: Category;
   onOpen: (p: Provider) => void;
   onShare: (p: Provider) => void;
+  initialBorough?: Borough | null;
+  initialNeighborhood?: string | null;
 }
 
-export function DiscoverView({ category, onOpen, onShare }: Props) {
-  const [borough, setBorough] = useState<Borough | null>("Manhattan");
-  const [neighborhood, setNeighborhood] = useState<string | null>(null);
+export function DiscoverView({ category, onOpen, onShare, initialBorough, initialNeighborhood }: Props) {
+  const [borough, setBorough] = useState<Borough | null>(initialBorough ?? "Manhattan");
+  const [neighborhood, setNeighborhood] = useState<string | null>(initialNeighborhood ?? null);
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
 
   const filtered = useMemo(() => {

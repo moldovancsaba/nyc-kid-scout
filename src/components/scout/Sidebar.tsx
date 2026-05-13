@@ -1,12 +1,13 @@
-import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, Users, X } from "lucide-react";
+import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, Users, X, Home } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/provider";
 
-export type ViewKey = Category | "Saved" | "Calculator" | "Scout AI Assistant" | "Meet-Up Groups";
+export type ViewKey = Category | "Saved" | "Calculator" | "Scout AI Assistant" | "Meet-Up Groups" | "Home";
 
 const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }[] = [
+  { key: "Home", icon: Home },
   { key: "Classes", icon: GraduationCap },
   { key: "Camps", icon: Tent },
   { key: "Birthday Parties", icon: PartyPopper },
@@ -43,7 +44,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
       >
         <div className="flex items-center justify-between p-6">
           <button
-            onClick={() => handle("Classes")}
+            onClick={() => handle("Home")}
             className="rounded-lg transition-opacity hover:opacity-80"
             aria-label="Go to home"
           >
@@ -61,7 +62,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
         <nav className="flex-1 px-4 py-2" aria-label="Main">
           <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">Discover</p>
           <ul className="space-y-1">
-            {ITEMS.slice(0, 6).map(({ key, icon: Icon }) => (
+            {ITEMS.slice(0, 7).map(({ key, icon: Icon }) => (
               <li key={key}>
                 <button
                   onClick={() => handle(key)}
@@ -82,7 +83,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
 
           <p className="px-3 pb-2 pt-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">My tools</p>
           <ul className="space-y-1">
-            {ITEMS.slice(6).map(({ key, icon: Icon }) => (
+            {ITEMS.slice(7).map(({ key, icon: Icon }) => (
               <li key={key}>
                 <button
                   onClick={() => handle(key)}
