@@ -73,7 +73,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
         <nav className="flex-1 px-4 py-2" aria-label="Main">
           <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">Discover</p>
           <ul className="space-y-1">
-            {ITEMS.slice(0, 7).map(({ key, icon: Icon }) => (
+            {ITEMS.slice(0, 8).map(({ key, icon: Icon }) => (
               <li key={key}>
                 <button
                   onClick={() => handle(key)}
@@ -94,7 +94,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
 
           <p className="px-3 pb-2 pt-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">My tools</p>
           <ul className="space-y-1">
-            {ITEMS.slice(7).map(({ key, icon: Icon }) => (
+            {ITEMS.slice(8).map(({ key, icon: Icon }) => (
               <li key={key}>
                 <button
                   onClick={() => handle(key)}
