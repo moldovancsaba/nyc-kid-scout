@@ -7,6 +7,10 @@ import { ScoutAssistantView } from "@/components/scout/views/ScoutAssistantView"
 import { MeetupGroupsView } from "@/components/scout/views/MeetupGroupsView";
 import { HomeView } from "@/components/scout/views/HomeView";
 import { MyAccountView } from "@/components/scout/views/MyAccountView";
+import { FamilyEventsView } from "@/components/scout/views/FamilyEventsView";
+import { EventCheckoutView } from "@/components/scout/views/EventCheckoutView";
+import { EventProfile } from "@/components/scout/panels/EventProfile";
+import { EventShareDialog } from "@/components/scout/panels/EventShareDialog";
 import { ProviderProfile } from "@/components/scout/panels/ProviderProfile";
 import { ShareDialog } from "@/components/scout/panels/ShareDialog";
 import { MeetupGroupProfile } from "@/components/scout/panels/MeetupGroupProfile";
@@ -15,6 +19,7 @@ import { TrustStrip } from "@/components/scout/TrustStrip";
 import { Logo } from "@/components/scout/Logo";
 import type { Provider, Borough, Category } from "@/types/provider";
 import type { MeetupGroup } from "@/types/meetup";
+import type { FamilyEvent } from "@/types/event";
 import { Menu, Heart, Bell, UserCircle } from "lucide-react";
 import { useSaved, useCalculator } from "@/store/useScout";
 
@@ -24,6 +29,9 @@ const Index = () => {
   const [shareProvider, setShareProvider] = useState<Provider | null>(null);
   const [openGroup, setOpenGroup] = useState<MeetupGroup | null>(null);
   const [shareGroup, setShareGroup] = useState<MeetupGroup | null>(null);
+  const [openEvent, setOpenEvent] = useState<FamilyEvent | null>(null);
+  const [shareEvent, setShareEvent] = useState<FamilyEvent | null>(null);
+  const [checkoutEvent, setCheckoutEvent] = useState<FamilyEvent | null>(null);
   const [mobileNav, setMobileNav] = useState(false);
   const [pendingLocation, setPendingLocation] = useState<{ borough?: Borough; neighborhood?: string } | null>(null);
   const { saved } = useSaved();
@@ -36,6 +44,13 @@ const Index = () => {
     if (location) setPendingLocation(location);
     else setPendingLocation(null);
     setView(next);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleTickets = (e: FamilyEvent) => {
+    setOpenEvent(null);
+    setCheckoutEvent(e);
+    setView("Event Checkout");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -133,6 +148,24 @@ const Index = () => {
             {view === "Meet-Up Groups" && (
               <MeetupGroupsView onOpen={setOpenGroup} onShare={setShareGroup} />
             )}
+            {view === "Family Events" && (
+              <FamilyEventsView
+                onOpen={setOpenEvent}
+                onShare={setShareEvent}
+                onTickets={handleTickets}
+                initialBorough={pendingLocation?.borough ?? null}
+                initialNeighborhood={pendingLocation?.neighborhood ?? null}
+              />
+            )}
+            {view === "Event Checkout" && checkoutEvent && (
+              <EventCheckoutView
+                event={checkoutEvent}
+                onBack={() => {
+                  setCheckoutEvent(null);
+                  setView("Family Events");
+                }}
+              />
+            )}
             {view === "My Account" && (
               <MyAccountView
                 onNavigate={handleNavigate}
@@ -164,6 +197,14 @@ const Index = () => {
         onOpenAnother={(g) => setOpenGroup(g)}
       />
       <MeetupShareDialog group={shareGroup} onClose={() => setShareGroup(null)} />
+      <EventProfile
+        event={openEvent}
+        onClose={() => setOpenEvent(null)}
+        onShare={setShareEvent}
+        onTickets={handleTickets}
+        onOpenAnother={(e) => setOpenEvent(e)}
+      />
+      <EventShareDialog event={shareEvent} onClose={() => setShareEvent(null)} />
     </div>
   );
 };
