@@ -1,10 +1,19 @@
-import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, Users, X, Home, UserCircle } from "lucide-react";
+import { GraduationCap, Tent, PartyPopper, Sparkles, Heart, Calculator, Bot, Users, X, Home, UserCircle, CalendarDays } from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/provider";
 
-export type ViewKey = Category | "Saved" | "Calculator" | "Scout AI Assistant" | "Meet-Up Groups" | "Home" | "My Account";
+export type ViewKey =
+  | Category
+  | "Saved"
+  | "Calculator"
+  | "Scout AI Assistant"
+  | "Meet-Up Groups"
+  | "Home"
+  | "My Account"
+  | "Family Events"
+  | "Event Checkout";
 
 const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: "Home", icon: Home },
@@ -12,6 +21,7 @@ const ITEMS: { key: ViewKey; icon: React.ComponentType<{ className?: string }> }
   { key: "Camps", icon: Tent },
   { key: "Birthday Parties", icon: PartyPopper },
   { key: "Drop-In Activities", icon: Sparkles },
+  { key: "Family Events", icon: CalendarDays },
   { key: "Meet-Up Groups", icon: Users },
   { key: "Scout AI Assistant", icon: Bot },
   { key: "Saved", icon: Heart },
