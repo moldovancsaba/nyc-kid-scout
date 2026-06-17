@@ -7,57 +7,59 @@
 
 @layer base {
   :root {
-    /* Brand palette */
-    --background: 47 38% 97%;          /* #FBFAF5 ivory */
-    --foreground: 0 0% 13%;            /* #222222 charcoal */
+    /* Class Scout brand palette — terracotta, sage, navy, cream, slate */
+    --background: 40 41% 96%;          /* #FAF7F1 cream */
+    --foreground: 213 70% 14%;         /* #0B223E navy */
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    --card-foreground: 213 70% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover-foreground: 213 70% 14%;
 
-    --primary: 0 0% 13%;               /* charcoal */
-    --primary-foreground: 47 38% 97%;
+    --primary: 213 70% 14%;            /* navy */
+    --primary-foreground: 40 41% 96%;
 
-    --secondary: 36 35% 90%;           /* #EFE7DA soft beige */
-    --secondary-foreground: 0 0% 13%;
+    --secondary: 101 18% 90%;          /* soft sage tint */
+    --secondary-foreground: 213 70% 14%;
 
-    --muted: 36 35% 93%;
-    --muted-foreground: 220 9% 46%;    /* #6B7280 */
+    --muted: 40 30% 92%;
+    --muted-foreground: 217 15% 31%;   /* #434C59 slate */
 
-    --accent: 173 80% 40%;             /* #14B8A6 teal */
+    --accent: 15 47% 62%;              /* #CA8570 terracotta */
     --accent-foreground: 0 0% 100%;
 
-    --teal: 173 80% 40%;
+    /* Token kept as `teal` for class compatibility, now mapped to terracotta */
+    --teal: 15 47% 62%;
     --teal-foreground: 0 0% 100%;
-    --teal-soft: 173 60% 94%;
+    --teal-soft: 15 60% 94%;
 
-    --orange: 24 95% 53%;              /* #F97316 */
+    /* Token kept as `orange`, now mapped to sage */
+    --orange: 101 12% 59%;             /* #90A287 sage */
     --orange-foreground: 0 0% 100%;
-    --orange-soft: 24 95% 95%;
+    --orange-soft: 101 25% 92%;
 
-    --beige: 36 35% 90%;
-    --ivory: 47 38% 97%;
+    --beige: 101 18% 90%;
+    --ivory: 40 41% 96%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 36 20% 88%;
-    --input: 36 20% 88%;
-    --ring: 173 80% 40%;
+    --border: 40 20% 87%;
+    --input: 40 20% 87%;
+    --ring: 15 47% 62%;
 
     --radius: 1rem;
 
-    /* Sidebar (dark charcoal) */
-    --sidebar-background: 0 0% 11%;
-    --sidebar-foreground: 0 0% 88%;
-    --sidebar-primary: 173 80% 40%;
+    /* Sidebar — deep navy */
+    --sidebar-background: 213 70% 14%;
+    --sidebar-foreground: 40 30% 92%;
+    --sidebar-primary: 15 47% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 17%;
+    --sidebar-accent: 213 55% 20%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 173 80% 40%;
+    --sidebar-border: 213 40% 24%;
+    --sidebar-ring: 15 47% 62%;
 
     /* Effects */
     --shadow-card: 0 1px 2px hsl(0 0% 0% / 0.04), 0 8px 24px -12px hsl(0 0% 0% / 0.08);
@@ -89,16 +91,16 @@
 
 @layer base {
   * { @apply border-border; }
-  html { font-family: 'Inter', system-ui, sans-serif; }
+  html { font-family: 'Outfit', system-ui, sans-serif; }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";
   }
-  h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', system-ui, sans-serif; letter-spacing: -0.02em; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.01em; font-weight: 700; }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Poppins', system-ui, sans-serif; letter-spacing: -0.02em; }
+  .font-display { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.01em; }
   .shadow-card { box-shadow: var(--shadow-card); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
