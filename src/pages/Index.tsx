@@ -34,6 +34,7 @@ const Index = () => {
   const [checkoutEvent, setCheckoutEvent] = useState<FamilyEvent | null>(null);
   const [mobileNav, setMobileNav] = useState(false);
   const [pendingLocation, setPendingLocation] = useState<{ borough?: Borough; neighborhood?: string } | null>(null);
+  const [aiInitialQuery, setAiInitialQuery] = useState<string | null>(null);
   const { saved } = useSaved();
   const { items } = useCalculator();
 
@@ -51,6 +52,12 @@ const Index = () => {
     setOpenEvent(null);
     setCheckoutEvent(e);
     setView("Event Checkout");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleAiSearch = (query: string) => {
+    setAiInitialQuery(query);
+    setView("Scout AI Assistant");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -130,7 +137,12 @@ const Index = () => {
         <main className="flex-1 px-4 py-6 sm:px-8 sm:py-10">
           <div className="mx-auto max-w-[1400px] animate-fade-in">
             {view === "Home" && (
-              <HomeView onNavigate={handleNavigate} onOpenProvider={setOpenProvider} onOpenGroup={setOpenGroup} />
+              <HomeView
+                onNavigate={handleNavigate}
+                onOpenProvider={setOpenProvider}
+                onOpenGroup={setOpenGroup}
+                onAiSearch={handleAiSearch}
+              />
             )}
             {(view === "Classes" || view === "Camps" || view === "Birthday Parties" || view === "Drop-In Activities") && (
               <DiscoverView
@@ -144,7 +156,14 @@ const Index = () => {
             )}
             {view === "Saved" && <SavedView onOpen={setOpenProvider} onShare={setShareProvider} />}
             {view === "Calculator" && <CalculatorView />}
-            {view === "Scout AI Assistant" && <ScoutAssistantView />}
+            {view === "Scout AI Assistant" && (
+              <ScoutAssistantView
+                initialQuery={aiInitialQuery}
+                onConsumedInitial={() => setAiInitialQuery(null)}
+                onOpenProvider={setOpenProvider}
+                onShareProvider={setShareProvider}
+              />
+            )}
             {view === "Meet-Up Groups" && (
               <MeetupGroupsView onOpen={setOpenGroup} onShare={setShareGroup} />
             )}
