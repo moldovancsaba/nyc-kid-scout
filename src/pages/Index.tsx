@@ -78,7 +78,7 @@ const Index = () => {
               className="flex items-center gap-3 rounded-full transition-opacity hover:opacity-80"
               aria-label="Go to home"
             >
-              <Logo withWordmark={false} size={48} />
+              <Logo withWordmark={false} size={36} tone="light" />
               <span className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
                 Class Scout NYC
               </span>
