@@ -18,7 +18,7 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
 
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-2xl bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-elevated"
+      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-elevated"
     >
       <div className="relative h-44 overflow-hidden">
         <img
@@ -33,7 +33,7 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
           </span>
         )}
         {provider.announcementBadge && (
-          <span className="absolute left-3 bottom-3 inline-flex items-center gap-1 rounded-full bg-orange px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
+          <span className="absolute left-3 bottom-3 inline-flex items-center gap-1 rounded-full bg-teal-soft px-2.5 py-1 text-[11px] font-semibold text-teal shadow-sm">
             <Megaphone className="h-3 w-3" />
             {provider.announcementBadge}
           </span>
@@ -45,15 +45,15 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
             toast.success(saved ? "Removed from saved" : "Saved");
           }}
           aria-label={saved ? "Remove from saved" : "Save provider"}
-          className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-card/95 backdrop-blur transition-colors hover:bg-card"
+          className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-border bg-card/95 backdrop-blur transition-colors hover:bg-card"
         >
-          <Heart className={cn("h-4 w-4", saved ? "fill-orange text-orange" : "text-foreground")} />
+          <Heart className={cn("h-4 w-4", saved ? "fill-teal text-teal" : "text-foreground")} />
         </button>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
         <button onClick={() => onOpen(provider)} className="text-left">
-          <h3 className="font-display text-lg font-semibold text-foreground transition-colors group-hover:text-teal">
+          <h3 className="font-display text-lg text-foreground transition-colors group-hover:text-primary">
             {provider.name}
           </h3>
         </button>
@@ -81,11 +81,11 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
 
         <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
           <div>
-            <span className="font-display text-lg font-bold text-orange">${provider.pricePerClass}</span>
+            <span className="text-xl font-semibold text-teal">${provider.pricePerClass}</span>
             <span className="text-xs text-muted-foreground">/class</span>
           </div>
           <div className="flex items-center gap-1 text-sm">
-            <Star className="h-4 w-4 fill-orange text-orange" />
+            <Star className="h-4 w-4 fill-teal text-teal" />
             <span className="font-semibold text-foreground">{provider.rating}</span>
             <span className="text-muted-foreground">({provider.reviewCount})</span>
           </div>
@@ -96,12 +96,12 @@ export function ProviderCard({ provider, onOpen, onShare }: Props) {
             <Button
               onClick={() => onOpen(provider)}
               aria-label={`Book now with ${provider.name}`}
-              className="flex-1 bg-teal text-teal-foreground hover:bg-teal/90"
+              className="flex-1 bg-teal text-teal-foreground hover:bg-teal/95"
             >
               <Calendar className="h-4 w-4" /> Book Now
             </Button>
           ) : (
-            <Button onClick={() => onOpen(provider)} className="flex-1 bg-foreground text-background hover:bg-foreground/90">
+            <Button onClick={() => onOpen(provider)} className="flex-1">
               View details
             </Button>
           )}

@@ -20,46 +20,46 @@
     --primary: 213 70% 14%;            /* navy */
     --primary-foreground: 40 41% 96%;
 
-    --secondary: 101 18% 90%;          /* soft sage tint */
+    --secondary: 37 32% 92%;           /* warm neutral tag */
     --secondary-foreground: 213 70% 14%;
 
-    --muted: 40 30% 92%;
-    --muted-foreground: 217 15% 31%;   /* #434C59 slate */
+    --muted: 40 47% 96%;
+    --muted-foreground: 215 14% 31%;   /* #434C59 slate */
 
-    --accent: 15 47% 62%;              /* #CA8570 terracotta */
+    --accent: 14 46% 62%;              /* #CA8570 terracotta */
     --accent-foreground: 0 0% 100%;
 
     /* Token kept as `teal` for class compatibility, now mapped to terracotta */
-    --teal: 15 47% 62%;
+    --teal: 14 46% 62%;
     --teal-foreground: 0 0% 100%;
-    --teal-soft: 15 60% 94%;
+    --teal-soft: 15 55% 94%;
 
     /* Token kept as `orange`, now mapped to sage */
-    --orange: 101 12% 59%;             /* #90A287 sage */
+    --orange: 100 13% 58%;             /* #90A287 sage */
     --orange-foreground: 0 0% 100%;
-    --orange-soft: 101 25% 92%;
+    --orange-soft: 100 23% 89%;
 
-    --beige: 101 18% 90%;
-    --ivory: 40 41% 96%;
+    --beige: 37 32% 92%;
+    --ivory: 40 47% 96%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 87%;
-    --input: 40 20% 87%;
-    --ring: 15 47% 62%;
+    --border: 35 33% 90%;
+    --input: 35 33% 90%;
+    --ring: 14 46% 62%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
     /* Sidebar — deep navy */
     --sidebar-background: 213 70% 14%;
     --sidebar-foreground: 40 30% 92%;
-    --sidebar-primary: 15 47% 62%;
+    --sidebar-primary: 14 46% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 213 55% 20%;
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 213 40% 24%;
-    --sidebar-ring: 15 47% 62%;
+    --sidebar-ring: 14 46% 62%;
 
     /* Effects */
     --shadow-card: 0 1px 2px hsl(0 0% 0% / 0.04), 0 8px 24px -12px hsl(0 0% 0% / 0.08);
@@ -91,16 +91,16 @@
 
 @layer base {
   * { @apply border-border; }
-  html { font-family: 'Outfit', system-ui, sans-serif; }
+  html { font-family: 'Montserrat', system-ui, sans-serif; }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";
   }
-  h1, h2, h3, h4, h5, h6 { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.01em; font-weight: 700; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Abril Fatface', Georgia, serif; letter-spacing: 0; font-weight: 400; }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.01em; }
+  .font-display { font-family: 'Abril Fatface', Georgia, serif; letter-spacing: 0; }
   .shadow-card { box-shadow: var(--shadow-card); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
   .scrollbar-hide::-webkit-scrollbar { display: none; }

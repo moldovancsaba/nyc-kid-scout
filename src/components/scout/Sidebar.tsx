@@ -70,7 +70,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
           </button>
         </div>
 
-        <nav className="flex-1 px-4 py-2" aria-label="Main">
+          <nav className="flex-1 bg-sidebar px-4 py-2" aria-label="Main">
           <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/50">Discover</p>
           <ul className="space-y-1">
             {ITEMS.slice(0, 8).map(({ key, icon: Icon }) => (
@@ -114,7 +114,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
           </ul>
         </nav>
 
-        <div className="m-4 rounded-2xl bg-sidebar-accent p-5">
+        <div className="m-4 rounded-lg bg-sidebar-accent p-5">
           <p className="font-display text-sm font-semibold text-sidebar-foreground">List your program</p>
           <p className="mt-1 text-xs leading-relaxed text-sidebar-foreground/70">
             Reach more NYC families with a featured listing.
