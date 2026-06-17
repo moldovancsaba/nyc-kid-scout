@@ -59,7 +59,7 @@ export function Sidebar({ active, onChange, mobileOpen, onCloseMobile }: Props) 
             className="rounded-lg transition-opacity hover:opacity-80"
             aria-label="Go to home"
           >
-            <Logo />
+            <Logo size={56} />
           </button>
           <button
             className="rounded-md p-2 text-sidebar-foreground/70 hover:bg-sidebar-accent lg:hidden"
