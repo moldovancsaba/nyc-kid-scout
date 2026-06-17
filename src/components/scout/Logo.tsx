@@ -31,8 +31,9 @@ export function Logo({
   tone = "dark",
   wordmarkClassName,
 }: LogoProps) {
-  // Badge padding scales with size to preserve clearspace at every breakpoint.
-  const pad = Math.max(6, Math.round(size * 0.12));
+  // Clearspace ~14% of the mark on every side. Badge is a fixed square so the
+  // mark always optically centers regardless of its intrinsic aspect ratio.
+  const pad = Math.max(6, Math.round(size * 0.14));
   const badgeSize = size + pad * 2;
 
   // Tone-driven badge appearance. Inner surface is always Warm Ivory so the
@@ -56,16 +57,14 @@ export function Logo({
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <div
-        className={`grid shrink-0 place-items-center rounded-2xl ${badgeClasses}`}
-        style={{ width: badgeSize, height: badgeSize, padding: pad }}
+        className={`relative grid shrink-0 place-items-center overflow-hidden rounded-2xl ${badgeClasses}`}
+        style={{ width: badgeSize, height: badgeSize }}
       >
         <img
           src={logoAsset.url}
           alt="Class Scout NY logo"
-          width={size}
-          height={size}
+          className="block object-contain"
           style={{ width: size, height: size }}
-          className="object-contain"
         />
       </div>
       {withWordmark && (
