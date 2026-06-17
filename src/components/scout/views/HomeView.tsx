@@ -130,46 +130,59 @@ export function HomeView({ onNavigate, onOpenProvider, onOpenGroup, onAiSearch }
             </p>
 
             {/* AI Search */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                submitAi(aiQuery);
-              }}
-              className="mt-6 max-w-xl"
-            >
-              <div className="flex items-center gap-2 rounded-full border border-foreground/15 bg-card p-2 pl-4 shadow-card focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20">
-                <Bot className="h-4 w-4 shrink-0 text-teal" />
-                <input
-                  value={aiQuery}
-                  onChange={(e) => setAiQuery(e.target.value)}
-                  type="text"
-                  placeholder="Tell Scout AI what you are looking for…"
-                  aria-label="Ask Scout AI"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
-                />
-                <Button
-                  type="submit"
-                  size="sm"
-                  disabled={!aiQuery.trim()}
-                  className="h-9 shrink-0 rounded-full bg-teal px-4 text-teal-foreground hover:bg-teal/90"
+            <div className="mt-8 max-w-xl">
+              <div className="rounded-[2rem] border border-border bg-card p-6 shadow-elevated">
+                <div className="mb-4 flex items-center gap-2">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-teal-soft">
+                    <Sparkles className="h-4 w-4 text-teal" />
+                  </span>
+                  <span className="font-display text-xl text-foreground">
+                    Scout AI
+                  </span>
+                  <span className="rounded-full bg-secondary px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Beta
+                  </span>
+                </div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitAi(aiQuery);
+                  }}
                 >
-                  <Send className="h-3.5 w-3.5" />
-                  Ask
-                </Button>
+                  <div className="flex items-center gap-2 rounded-full border-2 border-border bg-background p-2 pl-5 transition-colors focus-within:border-teal focus-within:shadow-[0_0_0_4px_hsl(var(--teal-soft))]">
+                    <Bot className="h-5 w-5 shrink-0 text-teal" />
+                    <input
+                      value={aiQuery}
+                      onChange={(e) => setAiQuery(e.target.value)}
+                      type="text"
+                      placeholder="What are you looking for today?"
+                      aria-label="Ask Scout AI"
+                      className="min-w-0 flex-1 bg-transparent text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
+                    />
+                    <Button
+                      type="submit"
+                      disabled={!aiQuery.trim()}
+                      className="h-11 shrink-0 rounded-full bg-teal px-5 text-sm font-semibold text-teal-foreground hover:bg-teal/90"
+                    >
+                      <Send className="h-4 w-4" />
+                      Ask
+                    </Button>
+                  </div>
+                </form>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {AI_CHIPS.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => submitAi(c)}
+                      className="rounded-full border border-border bg-secondary/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-teal hover:bg-teal-soft hover:text-teal"
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {AI_CHIPS.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => submitAi(c)}
-                    className="rounded-full border border-border bg-card/70 px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-teal hover:text-teal"
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-            </form>
+            </div>
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Button
