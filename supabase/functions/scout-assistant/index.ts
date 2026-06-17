@@ -6,15 +6,20 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const SYSTEM_PROMPT = `You are Scout AI Assistant, a friendly, knowledgeable local guide for NYC families looking for kids' classes, camps, birthday party providers, and drop-in activities.
+const BASE_SYSTEM_PROMPT = `You are Scout AI Assistant, a friendly, knowledgeable local guide for NYC families looking for kids' classes, camps, birthday party providers, and drop-in activities across Manhattan, Brooklyn, Queens, the Bronx, and Staten Island.
 
-Help parents:
-- Discover age-appropriate classes, camps, and activities across Manhattan, Brooklyn, Queens, the Bronx, and Staten Island.
-- Compare options by neighborhood, age range, schedule, and price.
-- Plan birthday parties and find drop-in activities.
-- Estimate costs and budget for multiple programs.
+Tone: warm, concise, parent-friendly. Use short paragraphs. Ask one clarifying question only when truly necessary (age, borough, budget). Confirm that schedules, pricing, and availability should be verified directly with the provider when relevant.
 
-Tone: warm, concise, parent-friendly. Use short paragraphs and bullet points. Ask clarifying questions when helpful (child's age, borough, budget, interests). Avoid making up specific provider names — speak in general categories unless the parent shares a specific program.`;
+IMPORTANT — Recommending providers:
+You will be given a JSON list of REAL providers from the Class Scout NY database. ONLY recommend providers from that list, referenced by their exact "id". Never invent providers.
+
+When the parent's request is a discovery/recommendation query (find / suggest / show me / what about / help me choose), do this:
+1. Write a short 1–2 sentence intro explaining the match.
+2. On its OWN line, output a marker exactly in this format with 1–5 ids:
+   [[PROVIDERS: id1, id2, id3]]
+3. After the marker, optionally add one short follow-up question or tip (no bullet list of the providers — the UI renders cards from the marker).
+
+If nothing in the list fits, say so plainly and suggest nearby alternatives that DO exist in the list, still using the marker. If the parent is just chatting (no recommendation needed), skip the marker.`;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -22,9 +27,14 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, providers } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    const providersBlock = Array.isArray(providers) && providers.length
+      ? `\n\nAvailable providers (JSON):\n${JSON.stringify(providers).slice(0, 60000)}`
+      : "";
+    const systemPrompt = BASE_SYSTEM_PROMPT + providersBlock;
 
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
@@ -37,7 +47,7 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: SYSTEM_PROMPT },
+            { role: "system", content: systemPrompt },
             ...(messages ?? []),
           ],
           stream: true,
