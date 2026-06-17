@@ -14,6 +14,8 @@ import {
   Mail,
   Star,
   Building2,
+  Send,
+  Bot,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -77,11 +79,28 @@ interface Props {
   onNavigate: (view: Category | "Saved" | "Calculator" | "Meet-Up Groups", location?: { borough?: Borough; neighborhood?: string }) => void;
   onOpenProvider: (p: Provider) => void;
   onOpenGroup: (g: MeetupGroup) => void;
+  onAiSearch?: (query: string) => void;
 }
 
-export function HomeView({ onNavigate, onOpenProvider, onOpenGroup }: Props) {
+export function HomeView({ onNavigate, onOpenProvider, onOpenGroup, onAiSearch }: Props) {
   const [borough, setBorough] = useState<Borough>("Manhattan");
   const [email, setEmail] = useState("");
+  const [aiQuery, setAiQuery] = useState("");
+
+  const AI_CHIPS = [
+    "Weekend activities for my 5-year-old",
+    "Art classes on the Upper West Side",
+    "Summer camps for an 8-year-old in Manhattan",
+    "Birthday party ideas in Brooklyn",
+    "Indoor drop-ins near Tribeca",
+  ];
+
+  const submitAi = (q: string) => {
+    const trimmed = q.trim();
+    if (!trimmed || !onAiSearch) return;
+    onAiSearch(trimmed);
+    setAiQuery("");
+  };
 
   const popularPicks = [
     PROVIDERS.find((p) => p.name.includes("Bright Brush")),
@@ -109,6 +128,49 @@ export function HomeView({ onNavigate, onOpenProvider, onOpenGroup }: Props) {
             <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
               Find classes, camps, birthday parties, drop-ins, and parent meet-up groups by borough and neighborhood.
             </p>
+
+            {/* AI Search */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                submitAi(aiQuery);
+              }}
+              className="mt-6 max-w-xl"
+            >
+              <div className="flex items-center gap-2 rounded-full border border-foreground/15 bg-card p-2 pl-4 shadow-card focus-within:border-teal focus-within:ring-2 focus-within:ring-teal/20">
+                <Bot className="h-4 w-4 shrink-0 text-teal" />
+                <input
+                  value={aiQuery}
+                  onChange={(e) => setAiQuery(e.target.value)}
+                  type="text"
+                  placeholder="Tell Scout AI what you are looking for…"
+                  aria-label="Ask Scout AI"
+                  className="min-w-0 flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                />
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={!aiQuery.trim()}
+                  className="h-9 shrink-0 rounded-full bg-teal px-4 text-teal-foreground hover:bg-teal/90"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                  Ask
+                </Button>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {AI_CHIPS.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => submitAi(c)}
+                    className="rounded-full border border-border bg-card/70 px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-teal hover:text-teal"
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </form>
+
             <div className="mt-7 flex flex-wrap gap-3">
               <Button
                 size="lg"
