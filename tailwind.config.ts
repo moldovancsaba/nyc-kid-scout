@@ -8,8 +8,9 @@ export default {
     container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },
     extend: {
       fontFamily: {
-        display: ["Poppins", "system-ui", "sans-serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Fraunces", "Georgia", "serif"],
+        sans: ["Outfit", "system-ui", "sans-serif"],
+        serif: ["Fraunces", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -34,6 +35,19 @@ export default {
           foreground: "hsl(var(--orange-foreground))",
           soft: "hsl(var(--orange-soft))",
         },
+        terracotta: {
+          DEFAULT: "hsl(var(--teal))",
+          foreground: "hsl(var(--teal-foreground))",
+          soft: "hsl(var(--teal-soft))",
+        },
+        sage: {
+          DEFAULT: "hsl(var(--orange))",
+          foreground: "hsl(var(--orange-foreground))",
+          soft: "hsl(var(--orange-soft))",
+        },
+        navy: "hsl(var(--primary))",
+        cream: "hsl(var(--ivory))",
+        slate2: "hsl(var(--muted-foreground))",
         beige: "hsl(var(--beige))",
         ivory: "hsl(var(--ivory))",
         sidebar: {

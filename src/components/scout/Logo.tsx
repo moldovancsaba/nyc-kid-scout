@@ -6,8 +6,8 @@ export function Logo({ size = 128, withWordmark = true, className = "" }: { size
       <img src={logo} alt="Class Scout NY logo" width={size} height={size} className="rounded-full" />
       {withWordmark && (
         <div className="leading-tight">
-          <div className="font-display text-xl font-bold tracking-tight text-sidebar-foreground">Class Scout</div>
-          <div className="font-display text-[12px] font-semibold tracking-[0.2em] text-teal">NEW YORK</div>
+          <div className="font-display text-2xl font-bold tracking-tight text-sidebar-foreground">Class Scout</div>
+          <div className="font-sans text-[11px] font-semibold tracking-[0.25em] text-teal uppercase">New York</div>
         </div>
       )}
     </div>
