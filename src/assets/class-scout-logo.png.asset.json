@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "6793620d-2e44-4bab-8e18-fd1772d3df45",
-  "project_id": "610127a5-da23-4ce1-aa74-d285d29fc9df",
-  "url": "/__l5e/assets-v1/6793620d-2e44-4bab-8e18-fd1772d3df45/class-scout-logo.png",
-  "r2_key": "a/v1/610127a5-da23-4ce1-aa74-d285d29fc9df/6793620d-2e44-4bab-8e18-fd1772d3df45/class-scout-logo.png",
-  "original_filename": "class-scout-logo.png",
-  "size": 66992,
   "content_type": "image/png",
-  "created_at": "2026-06-17T09:43:03Z"
+  "created_at": "2026-06-17T09:43:03Z",
+  "original_filename": "class-scout-logo.png",
+  "project_id": "8630cafe-fe51-4d43-81cf-067f3dc0bd20",
+  "r2_key": "a/v1/8630cafe-fe51-4d43-81cf-067f3dc0bd20/6793620d-2e44-4bab-8e18-fd1772d3df45/class-scout-logo.png",
+  "size": 66992,
+  "url": "/__l5e/assets-v1/6793620d-2e44-4bab-8e18-fd1772d3df45/class-scout-logo.png",
+  "version": 1
 }
