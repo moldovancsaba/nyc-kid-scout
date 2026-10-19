@@ -1,0 +1,53 @@
+name: Disposable welcome baseline
+on:
+  push:
+    branches: [docs/class-scout-welcome]
+permissions:
+  contents: read
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Replace client configuration with synthetic values
+        run: |
+          cat > .env <<'ENV'
+          VITE_SUPABASE_URL=https://example.invalid
+          VITE_SUPABASE_PUBLISHABLE_KEY=synthetic-public-demo-key
+          ENV
+      - run: npm ci
+      - run: npm run build
+      - name: Verify loopback preview serves the built entry
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/scout-preview.log 2>&1 &
+          PREVIEW_PID=$!
+          trap 'kill "$PREVIEW_PID" 2>/dev/null || true' EXIT
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          let response;
+          for (let i = 0; i < 50; i++) {
+            try { response = await fetch('http://127.0.0.1:4173/'); if (response.ok) break; } catch {}
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+          assert.equal(response?.status, 200);
+          const html = await response.text();
+          assert.ok(html.includes('Class Scout NY'));
+          const asset = html.match(/src="([^"]+\.js)"/)?.[1];
+          assert.ok(asset, 'built module exists');
+          assert.equal((await fetch('http://127.0.0.1:4173' + asset)).status, 200);
+          console.log('PASS: production build entry and JavaScript served from loopback preview; no external API invoked');
+          JS
+  lint-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci
+      - run: npm run lint
